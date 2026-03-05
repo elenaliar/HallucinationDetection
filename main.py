@@ -228,14 +228,14 @@ def main():
     print("loading corpus …")
     text   = fetch_text()
     tokens = tokenise(text)
-    print(f"  raw tokens : {len(tokens):,}")
+    print(f"raw tokens : {len(tokens):,}")
 
     w2i, i2w, counts = build_vocab(tokens, min_count=MIN_COUNT)
-    print(f"  vocabulary : {len(i2w):,} words")
+    print(f"vocabulary : {len(i2w):,} words")
 
     # map corpus to integer ids, drop OOV
     token_ids = [w2i[t] for t in tokens if t in w2i]
-    print(f"  kept tokens: {len(token_ids):,}")
+    print(f"kept tokens: {len(token_ids):,}")
 
     drop_prob   = subsample_probs(counts)
     noise_table = build_noise_table(counts)
@@ -259,11 +259,10 @@ def main():
         nbrs = nearest_neighbours(probe, W_in, w2i, i2w)
         if nbrs:
             nbrs_str = ", ".join(f"{w}({s:.2f})" for w, s in nbrs)
-            print(f"  {probe:12s} → {nbrs_str}")
+            print(f"{probe:12s} → {nbrs_str}")
 
     np.save("embeddings_in.npy",  W_in)
     np.save("embeddings_out.npy", W_out)
-    print("\nembeddings saved to embeddings_in.npy / embeddings_out.npy")
 
 
 if __name__ == "__main__":
